@@ -18,8 +18,8 @@ public:
     MyCircularQueue(int k) {
         capacity = k;
         data.resize(k);
-        front = 0;
-        rear = 0;
+        front = INVALID;
+        rear = INVALID;
     }
     
     bool enQueue(int value) {
@@ -27,9 +27,13 @@ public:
             return false;
         }
 
+        if (front == INVALID) {
+            front = 0;
+        }
+
         rear = (++rear) % capacity;
         data[rear] = value;
-        printf("rear: %d\n", rear);
+        printf("rear: %d, val: %d\n", rear, data[rear]);
         return true;
     }
     
@@ -38,7 +42,13 @@ public:
             return false;
         }
 
-        front = (front + 1) % capacity;
+        if (front == rear) {
+            front = INVALID;
+            rear = -1;
+        } else {
+            front = (++front) % capacity;
+        }
+
         return true;
     }
     
@@ -47,7 +57,7 @@ public:
             return INVALID;
         }
 
-        return front;
+        return data[front];
     }
     
     int Rear() {
@@ -55,11 +65,11 @@ public:
             return INVALID;
         }
 
-        return rear;
+        return data[rear];
     }
     
     bool isEmpty() {
-        return front == rear;
+        return front == INVALID;
     }
     
     bool isFull() {
