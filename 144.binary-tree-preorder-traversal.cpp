@@ -19,6 +19,44 @@
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
+        return morris(root);
+    }
+
+    vector<int> morris(TreeNode* root) {
+        vector<int> list;
+
+        TreeNode* current = root;
+        TreeNode* mostRight = NULL;
+
+        while (current) {
+            mostRight = current->left;
+            if (mostRight) { // has left sub-tree
+                while (mostRight->right && mostRight->right != current) {
+                    mostRight = mostRight->right;
+                }
+
+                if (!mostRight->right) { // the first time to visit this node
+                    //printf("1 Val: %d\n", current->val);
+                    list.push_back(current->val);
+                    mostRight->right = current;
+                    current = current->left;
+                    continue;
+                } else { // mostRight == cur
+                    mostRight->right = NULL;
+                }
+            }
+            else { // has no left sub-tree, only visit this node once
+                //printf("2 Val: %d\n", current->val);
+                list.push_back(current->val);
+            }
+
+            current = current->right;
+        }
+
+        return list;
+    }
+
+    vector<int> preorder(TreeNode* root) {
         vector<int> list;
         stack<TreeNode*> stack;
 

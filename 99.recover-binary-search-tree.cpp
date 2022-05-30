@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=94 lang=cpp
+ * @lc app=leetcode id=99 lang=cpp
  *
- * [94] Binary Tree Inorder Traversal
+ * [99] Recover Binary Search Tree
  */
 
 // @lc code=start
@@ -18,15 +18,17 @@
  */
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        return morris(root);
+    void recoverTree(TreeNode* root) {
+        morris(root);
     }
 
-    vector<int> morris(TreeNode* root) {
-        vector<int> list;
-
+    void morris(TreeNode* root) {
         TreeNode* current = root;
         TreeNode* mostRight = NULL;
+
+        TreeNode* pre = NULL;
+        TreeNode* first = NULL;
+        TreeNode* second = NULL;
 
         while (current) {
             mostRight = current->left;
@@ -41,38 +43,26 @@ public:
                     continue;
                 } else {
                     mostRight->right = NULL;
-                }   
+                }
+            } 
+
+            // In BST, pre val is always less than or equal to the current
+            // so if there exist two nodes that are need to swap correctly
+            // let first to record pre node
+            // and second to record the current node
+            if (pre && pre->val > current->val) {
+                //printf("current val: %d, pre val: %d\n", current->val, pre->val);
+                if (!first) {
+                    first = pre;
+                }
+                second = current;
             }
 
-            // 1. if current->left == null, we only visit this node once and print it
-            // 2. if current->left != null, we will visit it twice, and print this node
-            //    in the second time 
-            list.push_back(current->val);
+            pre = current;
             current = current->right;
         }
 
-        return list;
-    }
-
-    vector<int> inorder(TreeNode* root) {
-        vector<int> list;
-        stack<TreeNode*> stack;
-
-        TreeNode* current = root;
-
-        while(current || !stack.empty()) {
-            if (current) {
-                stack.push(current);
-                current = current->left;
-            } else {
-                TreeNode* node = stack.top();
-                stack.pop();
-                list.push_back(node->val);
-                current = node->right;
-            }
-        }
-        
-        return list;
+        swap(first->val, second->val);
     }
 };
 // @lc code=end
