@@ -19,19 +19,21 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        return recursive(head);
+        return iterative(head);
     }
 
     ListNode* iterative(ListNode* head) {
-        ListNode* newHead = NULL;
+        ListNode* pre = NULL;
+        ListNode* current = head;
 
-        while (head) {
-            ListNode* nextNode = head->next;
-            head->next = newHead;
-            newHead = head;
-            head = nextNode;
+        while (current) {
+            ListNode* tmp = current->next;
+            current->next = pre;
+            pre = current;
+            current = tmp;
         }
-        return newHead;
+
+        return pre;
     }
 
     ListNode* recursive(ListNode* head) {
