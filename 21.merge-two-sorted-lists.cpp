@@ -17,15 +17,16 @@
  */
 class Solution {
 public:
+    // 2023.01.14
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        return recursive(list1, list2);
+        return iterate(list1, list2);
     }
 
-    ListNode* recursive(ListNode* list1, ListNode* list2) {
-        if (!list1 && !list2) {
+    ListNode* iterate(ListNode* list1, ListNode* list2) {
+        if (!list1 && !list2 ) {
             return NULL;
         }
-
+        
         if (!list1) {
             return list2;
         }
@@ -34,24 +35,11 @@ public:
             return list1;
         }
 
-        ListNode* node = new ListNode(); 
-        if (list1->val > list2->val) {
-            node->val = list2->val;
-            node->next = recursive(list1, list2->next);
-        } else {
-            node->val = list1->val;
-            node->next = recursive(list1->next, list2);
-        }
-
-        return node;
-    }
-
-    ListNode* iterative(ListNode* list1, ListNode* list2) {
         ListNode* dummy = new ListNode(-1);
         ListNode* current = dummy;
-
+        
         while (list1 && list2) {
-            ListNode* node = new ListNode(0);
+            ListNode* node = new ListNode();
             if (list1->val > list2->val) {
                 node->val = list2->val;
                 list2 = list2->next;
@@ -74,6 +62,64 @@ public:
 
         return dummy->next;
     }
+
+    // ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+    //     return recursive(list1, list2);
+    // }
+
+    // ListNode* recursive(ListNode* list1, ListNode* list2) {
+    //     if (!list1 && !list2) {
+    //         return NULL;
+    //     }
+
+    //     if (!list1) {
+    //         return list2;
+    //     }
+
+    //     if (!list2) {
+    //         return list1;
+    //     }
+
+    //     ListNode* node = new ListNode(); 
+    //     if (list1->val > list2->val) {
+    //         node->val = list2->val;
+    //         node->next = recursive(list1, list2->next);
+    //     } else {
+    //         node->val = list1->val;
+    //         node->next = recursive(list1->next, list2);
+    //     }
+
+    //     return node;
+    // }
+
+    // ListNode* iterative(ListNode* list1, ListNode* list2) {
+    //     ListNode* dummy = new ListNode(-1);
+    //     ListNode* current = dummy;
+
+    //     while (list1 && list2) {
+    //         ListNode* node = new ListNode(0);
+    //         if (list1->val > list2->val) {
+    //             node->val = list2->val;
+    //             list2 = list2->next;
+    //         } else {
+    //             node->val = list1->val;
+    //             list1 = list1->next;
+    //         }
+            
+    //         current->next = node;
+    //         current = current->next;
+    //     }
+
+    //     if (list1) {
+    //         current->next = list1;
+    //     }
+
+    //     if (list2) {
+    //         current->next = list2;
+    //     }
+
+    //     return dummy->next;
+    // }
 };
 // @lc code=end
 
