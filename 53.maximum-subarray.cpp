@@ -147,14 +147,11 @@ public:
         }
 
         return max({maxSum, subLeftMaxSum, subRightMaxSum});
-
-
         
-//         這個程式碼是解決「最大子序和」問題的，使用了分治法。時間複雜度是 O(nlogn)，其中 n 是數組的長度。下面是分析：
-
-// 在分治法中，每個數組都會被分成兩半，這裡需要遍歷每個子數組的元素，所以運行時間是 O(n)。由於每個數組都被分成兩半，所以運行時間是 O(logn)。因此，總時間複雜度是 O(nlogn)。
-
-// 因此，這個程式碼的時間複雜度是 O(nlogn)。
+        // The total TC is O(nlogn), n is the length of an array
+        // we iterate an sub array which is TC is O(n)
+        // and every array is divided from two parts, and TC is O(logn)
+        // so the total TC come to O(nlogn)
     }
 };
 // @lc code=end
